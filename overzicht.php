@@ -1,41 +1,25 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-
-<html xmlns="http://www.w3.org/1999/xhtml"><head> 
-<title>Funda</title>
-  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/> 
-  <link rel="stylesheet" href="style.css" type="text/css"/>
-</head>
+<?php require_once 'header.php'; ?>
 
 <body>
 
-<div id="logo">
-  <img src="img/funda-logo-hp.gif" id="toplogo" alt="toplogo"/>
-</div>
+  <?php
+    if(isset($_POST['submit'])){
+      $soort_bouw = $_POST['woning'];
+      $straat_naam = $_POST['straatnaam'];
+      $huis_nummer = $_POST['huisnummer'];
+      $post_code = $_POST['postcode'];
+      $plaats_naam = $_POST['plaatsnaam'];
+    }
 
+      $sql = 'SELECT * FROM `wo` WHERE vraagprijs < 100000 AND Vraagprijs > 10000 ';
+      $sql_result = mysqli_query($conn, $sql);
 
-<div id="balk">
-  <ul>
-    <li class="active">Woningaanbod</li>
-    <li>Verkoop</li>
-    <li>NVM Makelaars</li>
-    <li>Gids</li>
-    <li>Verhuizen</li>
-    <li>My Funda</li>
-  </ul>
-</div>
-
-<div id="nav">
-  <ul>
-    <li><a href="index.html" class="active">Koopwoningen</a></li>
-    <li>Huurwoningen</li>
-    <li>Nieuwbouwprojecten</li>
-    <li>Recreatiewoningen</li>
-    <li>Europa</li>
-  </ul>
-</div>
+  ?>
 
 <div id="txt">
-  1.123 koopwoningen gevonden
+  <?php
+    echo mysqli_num_rows($sql_result) . " koopwoningen gevonden."
+  ?>
 </div>
 
 <div id="main">

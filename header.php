@@ -5,6 +5,7 @@
 <title>Funda</title>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/> 
   <link rel="stylesheet" href="style.css" type="text/css"/>
+  <?php require_once("db_connection.php") ?>
 </head>
 
 <body>

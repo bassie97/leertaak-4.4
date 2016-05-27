@@ -1,7 +1,7 @@
 <? require 'header.php'; ?>
 
 <div id="specifiek" style="width: 300px; margin-left: 30px;">
-<form method="post">
+<form method="post" action="overzicht.php">
  <fieldset>
    Soort woning: 
    <input type="radio" name="woning" value="bestaand" id="bestaand"/><label for="bestaand">Bestaande bouw</label>

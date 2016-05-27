@@ -9,7 +9,7 @@
 <body>
 
 <div id="logo">
-  <img src="img/funda-logo-hp.gif" id="toplogo" alt="toplogo"/>
+  <img src="img/logo.png" id="toplogo" alt="toplogo"/>
 </div>
 
 

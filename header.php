@@ -3,8 +3,9 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml"><head> 
 <title>Funda</title>
-  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/> 
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
   <link rel="stylesheet" href="style.css" type="text/css"/>
+  <script type="text/javascript" src="js/filter.js"></script>
   <?php require_once("db_connection.php") ?>
 </head>
 

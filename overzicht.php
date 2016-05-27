@@ -2,31 +2,42 @@
 <?php require 'functions.php' ?>
 
 <?php
+session_start();
+
 if (isset($_POST['submit'])) {
     $soort_bouw = $_POST['woning'];
     $straat_naam = $_POST['straatnaam'];
     $huis_nummer = $_POST['huisnummer'];
     $post_code = $_POST['postcode'];
     $plaats_naam = $_POST['plaatsnaam'];
+
+    $_SESSION['soort_bouw'] = $soort_bouw;
+    $_SESSION['straat_naam'] = $straat_naam;
+    $_SESSION['huis_nummer'] = $huis_nummer;
+    $_SESSION['post_code'] = $post_code;
+    $_SESSION['plaats_naam'] = $plaats_naam;
 }
 
 $sql = "SELECT 
-                Address, 
+                wo.Address, 
                 Vraagprijs,
-                PC, 
-                City, 
+                wo.PC, 
+                wo.City, 
                 AantalKamers, 
-                WoonOppervlakte 
+                WoonOppervlakte,
+                mkantoor.name
               FROM wo 
+              JOIN mkantoor
+              ON wo.mkid = mkantoor.mkid
               WHERE SoortBouw 
               LIKE '%$soort_bouw%' 
-              AND Address 
+              AND wo.Address 
               LIKE '%$straat_naam%' 
-              AND PC 
+              AND wo.PC 
               LIKE '%$post_code%' 
-              AND City 
+              AND wo.City 
               LIKE '%$plaats_naam%' 
-              AND Address 
+              AND wo.Address 
               LIKE '%$huis_nummer%'";
 $sql_result = mysqli_query($conn, $sql);
 
@@ -34,7 +45,7 @@ $sql_result = mysqli_query($conn, $sql);
 
 <div id="txt">
     <?php
-        getAmountOfHouses($sql_result);
+    getAmountOfHouses($sql_result);
     ?>
 </div>
 
@@ -76,8 +87,19 @@ $sql_result = mysqli_query($conn, $sql);
     <table>
         <tr>
             <td id="data" valign="top">
-                <div class="head">Prijsklasse van/tot</div>
+                <div class="head">Prijsklasse van</div>
+                <input type="range" id="myRangeVan" min="0" max="10000000" step="1000" value="0" oninput="showValVan();"
+                       onmouseup="getResults()">
                 <br/>
+                <div id="van">€0</div>
+                <h4>Tot:</h4>
+                <br/>
+                <input type="range" id="myRangeTot" min="0" max="10000000" step="1000" value="0" oninput="showValTot()"
+                       ; onmouseup="getResults()">
+                <br/>
+                <div id="tot">€0</div>
+                <br/>
+
                 <div class="head">Soort object</div>
                 <div class="content">
                     <a href="#" class="licht">Data</a>
@@ -103,28 +125,24 @@ $sql_result = mysqli_query($conn, $sql);
                 </div>
             </td>
 
-
-            <td valign="top">
-
-                //TODO: implement pagination
+            <td valign="top" id="results">
                 <?php
-                    if(mysqli_num_rows($sql_result) > 0){
-                        while($row = mysqli_fetch_assoc($sql_result)){
+                if (mysqli_num_rows($sql_result) > 0) {
+                    while ($row = mysqli_fetch_assoc($sql_result)) {
                         ?>
-                            <div class="huisdata">
-                                <div class="head"><a class="normal" href="detail.html"><?php echo $row['Address'] ?></a></div>
-                                <div class="prijs">€ <?php echo $row['Vraagprijs'] ?> k.k.</div>
-                                <br/>
-                                <span class="adres"><?php echo $row['PC'] . " " . $row['City']?><br/><?php  echo $row['WoonOppervlakte'] . "m" ?><sup>2</sup> - <?php echo $row['AantalKamers'] . " kamers"?></span><br/>
-                                <span><a class="makelaar" href="makelaar.html">Hypodomus Groningen</a></span>
+                        <div class="huisdata">
+                            <div class="head"><a class="normal" href="detail.html"><?php echo $row['Address'] ?></a>
                             </div>
+                            <div class="prijs">€ <?php echo $row['Vraagprijs'] ?> k.k.</div>
+                            <br/>
+                            <span class="adres"><?php echo $row['PC'] . " " . $row['City'] ?>
+                                <br/><?php echo $row['WoonOppervlakte'] . "m" ?>
+                                <sup>2</sup> - <?php echo $row['AantalKamers'] . " kamers" ?></span><br/>
+                            <span><a class="makelaar" href="makelaar.html"><?php echo $row['name']?></a></span>
+                        </div>
                         <?php
-                        }
                     }
-                ?>
-
-
-
+                }?>
             </td>
         </tr>
     </table>
@@ -132,9 +150,8 @@ $sql_result = mysqli_query($conn, $sql);
 </div>
 
 
-</body></html>
-
-
+</body>
+</html>
          
 
       

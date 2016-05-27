@@ -4,8 +4,8 @@
 <form method="post" action="overzicht.php">
  <fieldset>
    Soort woning: 
-   <input type="radio" name="woning" value="bestaand" id="bestaand"/><label for="bestaand">Bestaande bouw</label>
-   <input type="radio" name="woning" value="nieuwbouw" id="nieuwbouw"/><label for="nieuwbouw">Bestaande bouw</label>
+   <input type="radio" name="woning" value="1" id="bestaand"/><label for="bestaand">Bestaande bouw</label>
+   <input type="radio" name="woning" value="2" id="nieuwbouw"/><label for="nieuwbouw">Nieuwbouw</label>
    <br/>
 
    Vul (een deel van) het adres in dat u zoekt.<br/>
@@ -17,7 +17,7 @@
     <tr><td>Plaatsnaam </td><td><input type="text" name="plaatsnaam" size="50"/></td></tr> 
    </table>
 
-   <input type="submit" value="Zoek koopaanbod"/> 
+   <input type="submit" name="submit" value="Zoek koopaanbod"/>
  </fieldset>
 </form>
 </div>

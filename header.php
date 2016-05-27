@@ -1,4 +1,4 @@
-<? print "<?xml version=\"1.0\" encoding=\"utf-8\" ?>\n\n"; ?>
+<?php print "<?xml version=\"1.0\" encoding=\"utf-8\" ?>\n\n"; ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 
 <html xmlns="http://www.w3.org/1999/xhtml"><head> 
@@ -11,7 +11,7 @@
 <body>
 
 <div id="logo">
-  <img src="img/funda-logo-hp.gif" id="toplogo" alt="toplogo"/>
+  <img src="img/logo.png" id="toplogo" alt="toplogo"/>
 </div>
 
 

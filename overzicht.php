@@ -1,7 +1,5 @@
 <?php require_once 'header.php'; ?>
 
-<body>
-
   <?php
     if(isset($_POST['submit'])){
       $soort_bouw = $_POST['woning'];
@@ -11,7 +9,24 @@
       $plaats_naam = $_POST['plaatsnaam'];
     }
 
-      $sql = 'SELECT * FROM `wo` WHERE vraagprijs < 100000 AND Vraagprijs > 10000 ';
+      $sql = "SELECT 
+                Address, 
+                Vraagprijs,
+                PC, 
+                City, 
+                AantalKamers, 
+                WoonOppervlakte 
+              FROM wo 
+              WHERE SoortBouw 
+              LIKE '%$soort_bouw%' 
+              AND Address 
+              LIKE '%$straat_naam%' 
+              AND PC 
+              LIKE '%$post_code%' 
+              AND City 
+              LIKE '%$plaats_naam%' 
+              AND Address 
+              LIKE '%$huis_nummer%'";
       $sql_result = mysqli_query($conn, $sql);
 
   ?>

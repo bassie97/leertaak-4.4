@@ -10,7 +10,6 @@ if (isset($_POST['submit'])) {
     $huis_nummer = $_POST['huisnummer'];
     $post_code = $_POST['postcode'];
     $plaats_naam = $_POST['plaatsnaam'];
-
     $_SESSION['soort_bouw'] = $soort_bouw;
     $_SESSION['straat_naam'] = $straat_naam;
     $_SESSION['huis_nummer'] = $huis_nummer;
@@ -148,8 +147,6 @@ $sql_result = mysqli_query($conn, $sql);
     </table>
 
 </div>
-
-
 </body>
 </html>
          

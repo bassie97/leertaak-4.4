@@ -3,7 +3,8 @@
 <div id="specifiek" style="width: 300px; margin-left: 30px;">
 <form method="post" action="overzicht.php">
  <fieldset>
-   Soort woning: 
+   Soort woning:
+   <input type="hidden" name="woning" value="">
    <input type="radio" name="woning" value="1" id="bestaand"/><label for="bestaand">Bestaande bouw</label>
    <input type="radio" name="woning" value="2" id="nieuwbouw"/><label for="nieuwbouw">Nieuwbouw</label>
    <br/>

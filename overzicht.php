@@ -1,15 +1,16 @@
-<?php require_once 'header.php'; ?>
+<?php require_once 'header.php' ?>
+<?php require 'functions.php' ?>
 
-  <?php
-    if(isset($_POST['submit'])){
-      $soort_bouw = $_POST['woning'];
-      $straat_naam = $_POST['straatnaam'];
-      $huis_nummer = $_POST['huisnummer'];
-      $post_code = $_POST['postcode'];
-      $plaats_naam = $_POST['plaatsnaam'];
-    }
+<?php
+if (isset($_POST['submit'])) {
+    $soort_bouw = $_POST['woning'];
+    $straat_naam = $_POST['straatnaam'];
+    $huis_nummer = $_POST['huisnummer'];
+    $post_code = $_POST['postcode'];
+    $plaats_naam = $_POST['plaatsnaam'];
+}
 
-      $sql = "SELECT 
+$sql = "SELECT 
                 Address, 
                 Vraagprijs,
                 PC, 
@@ -27,78 +28,119 @@
               LIKE '%$plaats_naam%' 
               AND Address 
               LIKE '%$huis_nummer%'";
-      $sql_result = mysqli_query($conn, $sql);
+$sql_result = mysqli_query($conn, $sql);
 
-  ?>
+?>
 
 <div id="txt">
-  <?php
-    echo mysqli_num_rows($sql_result) . " koopwoningen gevonden."
-  ?>
+    <?php
+        getAmountOfHouses($sql_result);
+    ?>
 </div>
 
 <div id="main">
+    <?php
+    $search_query = "U heeft gezocht op: ";
+    if (isset($soort_bouw)) {
+        $sql = "SELECT name
+              FROM soortbouw
+              WHERE id = '$soort_bouw'";
+        $result = mysqli_query($conn, $sql);
+        if (mysqli_num_rows($result) > 0) {
+            while ($row = mysqli_fetch_assoc($result)) {
+                $search_query .= " " . $row['name'];
+            }
+        }
+    }
 
-<table>
-  <tr>
-    <td id="data" valign="top">
-      <div class="head">Prijsklasse van/tot</div><br/>
-      <div class="head">Soort object</div>
-      <div class="content">
-        <a href="#" class="licht">Data</a> 
-        <!-- DATA WEERGEVEN -->
-      </div>
+    if (isset($plaats_naam)) {
+        $search_query .= " " . $plaats_naam;
+    }
 
-      <div class="head">Soort bouw</div>
-      <div class="content">
-        <a href="#" class="licht">Data</a> 
-        <!-- DATA WEERGEVEN -->
-      </div>
+    if (isset($straat_naam)) {
+        $search_query .= " " . $straat_naam;
+    }
 
-      <div class="head">Aantal kamers</div>
-      <div class="content">
-        <a href="#" class="licht">Data</a> 
-        <!-- DATA WEERGEVEN -->
-      </div>
+    if (isset($huis_nummer)) {
+        $search_query .= " " . $huis_nummer;
+    }
 
-      <div class="head">Woonoppervlakte</div>
-      <div class="content">
-        <a href="#" class="licht">Data</a> 
-        <!-- DATA WEERGEVEN -->
-      </div>
-    </td>
-    
+    if (isset($post_code)) {
+        $search_query .= " " . $post_code;
+    }
 
-    <td valign="top">
-      <div class="huisdata">
-        <div class="head"><a class="normal" href="detail.html">Bekemaheerd 22</a></div><div class="prijs">€ 135.000 k.k.</div><br/>
-        <span class="adres">9737 PT Groningen<br/>75 m<sup>2</sup> - 3 kamers</span><br/>
-        <span><a class="makelaar" href="makelaar.html">Hypodomus Groningen</a></span>
-      </div>
+    ?>
+    <div id="search_query">
+        <?php echo $search_query; ?>
+    </div>
+    <table>
+        <tr>
+            <td id="data" valign="top">
+                <div class="head">Prijsklasse van/tot</div>
+                <br/>
+                <div class="head">Soort object</div>
+                <div class="content">
+                    <a href="#" class="licht">Data</a>
+                    <!-- DATA WEERGEVEN -->
+                </div>
 
-      <div class="huisdata">
-        <div class="head"><a class="normal" href="detail.html">Bekemaheerd 22</a></div><div class="prijs">€ 135.000 k.k.</div><br/>
-        <span class="adres">9737 PT Groningen<br/>75 m<sup>2</sup> - 3 kamers</span><br/>
-        <span><a class="makelaar" href="makelaar.html">Hypodomus Groningen</a></span>
-      </div>
+                <div class="head">Soort bouw</div>
+                <div class="content">
+                    <a href="#" class="licht">Data</a>
+                    <!-- DATA WEERGEVEN -->
+                </div>
 
-      <div class="huisdata">
-        <div class="head"><a class="normal" href="detail.html">Bekemaheerd 22</a></div><div class="prijs">€ 135.000 k.k.</div><br/>
-        <span class="adres">9737 PT Groningen<br/>75 m<sup>2</sup> - 3 kamers</span><br/>
-        <span><a class="makelaar" href="makelaar.html">Hypodomus Groningen</a></span>
-      </div>
+                <div class="head">Aantal kamers</div>
+                <div class="content">
+                    <a href="#" class="licht">Data</a>
+                    <!-- DATA WEERGEVEN -->
+                </div>
 
-      <div class="huisdata">
-        <div class="head"><a class="normal" href="detail.html">Bekemaheerd 22</a></div><div class="prijs">€ 135.000 k.k.</div><br/>
-        <span class="adres">9737 PT Groningen<br/>75 m<sup>2</sup> - 3 kamers</span><br/>
-        <span><a class="makelaar" href="makelaar.html">Hypodomus Groningen</a></span>
-      </div>
-    </td>
-  </tr>
-</table>
+                <div class="head">Woonoppervlakte</div>
+                <div class="content">
+                    <a href="#" class="licht">Data</a>
+                    <!-- DATA WEERGEVEN -->
+                </div>
+            </td>
+
+
+            <td valign="top">
+                <div class="huisdata">
+                    <div class="head"><a class="normal" href="detail.html">Bekemaheerd 22</a></div>
+                    <div class="prijs">€ 135.000 k.k.</div>
+                    <br/>
+                    <span class="adres">9737 PT Groningen<br/>75 m<sup>2</sup> - 3 kamers</span><br/>
+                    <span><a class="makelaar" href="makelaar.html">Hypodomus Groningen</a></span>
+                </div>
+
+                <div class="huisdata">
+                    <div class="head"><a class="normal" href="detail.html">Bekemaheerd 22</a></div>
+                    <div class="prijs">€ 135.000 k.k.</div>
+                    <br/>
+                    <span class="adres">9737 PT Groningen<br/>75 m<sup>2</sup> - 3 kamers</span><br/>
+                    <span><a class="makelaar" href="makelaar.html">Hypodomus Groningen</a></span>
+                </div>
+
+                <div class="huisdata">
+                    <div class="head"><a class="normal" href="detail.html">Bekemaheerd 22</a></div>
+                    <div class="prijs">€ 135.000 k.k.</div>
+                    <br/>
+                    <span class="adres">9737 PT Groningen<br/>75 m<sup>2</sup> - 3 kamers</span><br/>
+                    <span><a class="makelaar" href="makelaar.html">Hypodomus Groningen</a></span>
+                </div>
+
+                <div class="huisdata">
+                    <div class="head"><a class="normal" href="detail.html">Bekemaheerd 22</a></div>
+                    <div class="prijs">€ 135.000 k.k.</div>
+                    <br/>
+                    <span class="adres">9737 PT Groningen<br/>75 m<sup>2</sup> - 3 kamers</span><br/>
+                    <span><a class="makelaar" href="makelaar.html">Hypodomus Groningen</a></span>
+                </div>
+            </td>
+        </tr>
+    </table>
 
 </div>
-
 
 
 </body></html>

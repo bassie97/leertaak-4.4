@@ -1,4 +1,4 @@
-<? require 'header.php'; ?>
+<?php require_once 'header.php'; ?>
 
 <div id="txt">
   Zoek in 20 koopwoningen

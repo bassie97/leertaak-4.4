@@ -162,3 +162,5 @@ table#kenmerken td {
 table#kenmerken td.kop {
   color: dimgray;
 }
+
+sup {font-size:xx-small; vertical-align:super;}

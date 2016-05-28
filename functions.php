@@ -19,3 +19,29 @@
     
         echo $amount;
     }
+
+    /**
+     * @param $arr1
+     * @param $sql1
+     * @return mixed
+     */
+    function createQuery($arr1, $sql1){
+        if(count($arr1) > 1){
+            $val = end($arr1);
+            $key = key($arr1);
+            array_pop($arr1);
+            $sql1 .= " WHERE " . $key . " LIKE " . "'%" . $val . "%' ";
+
+            foreach ($arr1 as $key => $val){
+                $sql1 .= "AND " . $key . " LIKE " . "'%" . $val . "%' ";
+            }
+        }else{
+            $val = end($arr1);
+            $key = key($arr1);
+            array_pop($arr1);
+            $sql1.= " WHERE " . $key . " LIKE " . "'%" . $val . "%' ";
+        }
+        $sql1 .= ";";
+        $sql = $sql1;
+        return $sql;
+    }

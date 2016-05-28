@@ -8,8 +8,70 @@
 
 session_start();
 
-$van = intval($_GET['van']);
-$tot = intval($_GET['tot']);
+$arr = [];
+
+if (isset($_GET['van'])){
+    $van = intval($_GET['van']);
+    $_SESSION['van'] = $van;
+//    array_push($arr, "AND vraagprijs > " . $van . " ");
+}
+
+if (isset($_GET['tot'])){
+    $tot = intval($_GET['tot']);
+    $_SESSION['tot'] = $tot;
+//    array_push($arr, "AND vraagprijs < " . $tot . " ");
+}
+
+if(isset($_GET['soort_object'])){
+    $soort_object = intval($_GET['soort_object']);
+    $_SESSION['soort_object'] = $soort_object;
+//    array_push($arr, "AND soortobject = " . $soort_object . " ");
+}
+
+if(isset($_GET['aantal_kamers'])){
+    $aantal_kamers = intval($_GET['aantal_kamers']);
+    $_SESSION['aantal_kamers'] = $aantal_kamers;
+//    array_push($arr, "AND aantalkamers = " . $aantal_kamers . " ");
+}
+
+if (isset($_GET['oppervlakte'])){
+    $oppervlakte = intval($_GET['oppervlakte']);
+    $_SESSION['oppervlakte'] = $oppervlakte;
+}
+
+$soort_bouw = $_SESSION['soort_bouw'];
+$straat_naam = $_SESSION['straat_naam'];
+$post_code = $_SESSION['post_code'];
+$plaats_naam = $_SESSION['plaats_naam'];
+$huis_nummer = $_SESSION['huis_nummer'];
+
+if(isset($_GET['soort_bouw'])){
+    $soort_bouw = intval($_GET['soort_bouw']);
+    $_SESSION['soort_bouw'] = $soort_bouw;
+}
+
+if (isset($_SESSION['soort_object'])) {
+    $soort_object = $_SESSION['soort_object'];
+    array_push($arr, "AND soortobject = " . $soort_object . " ");
+}
+if (isset($_SESSION['van'])){
+    $van = $_SESSION['van'];
+    array_push($arr, "AND vraagprijs > " . $van . " ");
+}
+if (isset($_SESSION['tot'])){
+    $tot = $_SESSION['tot'];
+    array_push($arr, "AND vraagprijs < " . $tot . " ");
+}
+
+if (isset($_SESSION['aantal_kamers'])){
+    $aantal_kamers = $_SESSION['aantal_kamers'];
+    array_push($arr, "AND aantalkamers = " . $aantal_kamers . " ");
+}
+
+if (isset($_SESSION['oppervlakte'])){
+    $oppervlakte = $_SESSION['oppervlakte'];
+    array_push($arr, "AND woonoppervlakte = " . $oppervlakte . " ");
+}
 
 $servername = "localhost";
 $username = "root";
@@ -25,19 +87,35 @@ if ($conn->connect_error) {
 }
 
 $sql = "SELECT 
-            Address, 
-            Vraagprijs,
-            PC, 
-            City, 
-            AantalKamers, 
-            WoonOppervlakte 
-        FROM wo
-        WHERE vraagprijs > '$van'
-        AND vraagprijs < '$tot'
-        LIMIT 15";
+                wo.Address, 
+                Vraagprijs,
+                wo.PC, 
+                wo.City, 
+                AantalKamers, 
+                WoonOppervlakte,
+                mkantoor.name
+              FROM wo 
+              JOIN mkantoor
+              ON wo.mkid = mkantoor.mkid
+              WHERE SoortBouw 
+              LIKE '%$soort_bouw%' 
+              AND wo.Address 
+              LIKE '%$straat_naam%' 
+              AND wo.PC 
+              LIKE '%$post_code%' 
+              AND wo.City 
+              LIKE '%$plaats_naam%' 
+              AND wo.Address 
+              LIKE '%$huis_nummer%' ";
+if(count($arr) > 0){
+    foreach ($arr as $value){
+        $sql .= $value;
+    }
+}
+$sql .= " LIMIT 15";
 
-$sql_result = mysqli_query($conn,$sql);
-
+$sql_result = mysqli_query($conn, $sql);
+print_r($sql);
 if (mysqli_num_rows($sql_result) > 0) {
     while ($row = mysqli_fetch_assoc($sql_result)) {
         ?>

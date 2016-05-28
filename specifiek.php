@@ -1,5 +1,10 @@
-<? require 'header.php'; ?>
-
+<? require_once 'header.php' ?>
+<?php
+    session_start();
+    if(isset($_SESSION['exit'])){
+        session_destroy();
+    }
+?>
 <div id="specifiek" style="width: 300px; margin-left: 30px;">
 <form method="post" action="overzicht.php">
  <fieldset>

@@ -15,6 +15,7 @@ if (isset($_POST['submit'])) {
     $_SESSION['huis_nummer'] = $huis_nummer;
     $_SESSION['post_code'] = $post_code;
     $_SESSION['plaats_naam'] = $plaats_naam;
+    $_SESSION['exit'] = true;
 }
 
 $sql = "SELECT 
@@ -27,17 +28,26 @@ $sql = "SELECT
                 mkantoor.name
               FROM wo 
               JOIN mkantoor
-              ON wo.mkid = mkantoor.mkid
-              WHERE SoortBouw 
-              LIKE '%$soort_bouw%' 
-              AND wo.Address 
-              LIKE '%$straat_naam%' 
-              AND wo.PC 
-              LIKE '%$post_code%' 
-              AND wo.City 
-              LIKE '%$plaats_naam%' 
-              AND wo.Address 
-              LIKE '%$huis_nummer%'";
+              ON wo.mkid = mkantoor.mkid";
+$arr1 = [];
+if (!empty($soort_bouw)) {
+    $arr1["SoortBouw"] = $soort_bouw;
+}
+if (!empty($straat_naam)) {
+    $arr1["wo.Address"] = $straat_naam;
+}
+if (!empty($post_code)) {
+    $arr1["wo.PC"] = $post_code;
+}
+if (!empty($plaats_naam)) {
+    $arr1["wo.City"] = $plaats_naam;
+}
+if (!empty($huis_nummer)) {
+    $arr1["wo.Address"] .= " " . $huis_nummer;
+}
+
+$sql = createQuery($arr1, $sql);
+
 $sql_result = mysqli_query($conn, $sql);
 
 ?>
@@ -101,26 +111,58 @@ $sql_result = mysqli_query($conn, $sql);
 
                 <div class="head">Soort object</div>
                 <div class="content">
-                    <a href="#" class="licht">Data</a>
-                    <!-- DATA WEERGEVEN -->
+                    <select id="mySelectSoortObject" onchange="selectSoortObject()">
+                        <?php
+                        $sql1 = "SELECT id, name FROM soortobject;";
+                        $result = mysqli_query($conn, $sql1);
+                        while ($row = mysqli_fetch_assoc($result)) {
+                            ?>
+                            <option value='<?php echo $row['id'] ?>'><?php echo $row['name'] ?></option>
+                            <?php
+                        }
+                        ?>
+                    </select>
                 </div>
 
                 <div class="head">Soort bouw</div>
                 <div class="content">
-                    <a href="#" class="licht">Data</a>
-                    <!-- DATA WEERGEVEN -->
+                    <select id="mySelectSoortBouw" onchange="selectSoortBouw()">
+                        <?php
+                        $sql1 = "SELECT id, name FROM soortBouw;";
+                        $result = mysqli_query($conn, $sql1);
+                        while ($row = mysqli_fetch_assoc($result)) {
+                            ?>
+                            <option value='<?php echo $row['id'] ?>'><?php echo $row['name'] ?></option>
+                            <?php
+                        }
+                        ?>
+                    </select>
                 </div>
 
                 <div class="head">Aantal kamers</div>
                 <div class="content">
-                    <a href="#" class="licht">Data</a>
-                    <!-- DATA WEERGEVEN -->
+                    <select id="mySelectAantalKamers" onchange="selectAantalKamers()">
+                        <?php
+                        $sql1 = "SELECT MAX(`AantalKamers`) AS AantalKamers FROM wo;";
+                        $result = mysqli_query($conn, $sql1);
+                        print_r($result);
+                        while ($row = mysqli_fetch_assoc($result)) {
+                            for ($i = 1; $i <= $row['AantalKamers']; $i++){
+                                ?>
+                                <option value='<?php echo $i ?>'><?php echo $i ?></option>
+                                <?php
+                            }
+                        }
+                        ?>
+                    </select>
                 </div>
 
                 <div class="head">Woonoppervlakte</div>
                 <div class="content">
-                    <a href="#" class="licht">Data</a>
-                    <!-- DATA WEERGEVEN -->
+                    <input type="range" id="myRangeOppervlakte" min="0" max="1000" step="1" value="0" oninput="showValoppervlakte();"
+                           onmouseup="getOppervlakte()">
+                    <br/>
+                    <div id="oppervlakte">0m<sup>2</sup></div>
                 </div>
             </td>
 
@@ -137,11 +179,11 @@ $sql_result = mysqli_query($conn, $sql);
                             <span class="adres"><?php echo $row['PC'] . " " . $row['City'] ?>
                                 <br/><?php echo $row['WoonOppervlakte'] . "m" ?>
                                 <sup>2</sup> - <?php echo $row['AantalKamers'] . " kamers" ?></span><br/>
-                            <span><a class="makelaar" href="makelaar.html"><?php echo $row['name']?></a></span>
+                            <span><a class="makelaar" href="makelaar.html"><?php echo $row['name'] ?></a></span>
                         </div>
                         <?php
                     }
-                }?>
+                } ?>
             </td>
         </tr>
     </table>

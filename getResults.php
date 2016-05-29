@@ -19,24 +19,26 @@ if (isset($_GET['van'])){
 if (isset($_GET['tot'])){
     $tot = intval($_GET['tot']);
     $_SESSION['tot'] = $tot;
-//    array_push($arr, "AND vraagprijs < " . $tot . " ");
 }
 
 if(isset($_GET['soort_object'])){
     $soort_object = intval($_GET['soort_object']);
     $_SESSION['soort_object'] = $soort_object;
-//    array_push($arr, "AND soortobject = " . $soort_object . " ");
 }
 
 if(isset($_GET['aantal_kamers'])){
     $aantal_kamers = intval($_GET['aantal_kamers']);
     $_SESSION['aantal_kamers'] = $aantal_kamers;
-//    array_push($arr, "AND aantalkamers = " . $aantal_kamers . " ");
 }
 
-if (isset($_GET['oppervlakte'])){
-    $oppervlakte = intval($_GET['oppervlakte']);
-    $_SESSION['oppervlakte'] = $oppervlakte;
+if (isset($_GET['oppervlakteVan'])){
+    $oppervlakteVan = intval($_GET['oppervlakteVan']);
+    $_SESSION['oppervlakteVan'] = $oppervlakteVan;
+}
+
+if (isset($_GET['oppervlakteTot'])){
+    $oppervlakteTot = intval($_GET['oppervlakteTot']);
+    $_SESSION['oppervlakteTot'] = $oppervlakteTot;
 }
 
 $soort_bouw = $_SESSION['soort_bouw'];
@@ -68,9 +70,14 @@ if (isset($_SESSION['aantal_kamers'])){
     array_push($arr, "AND aantalkamers = " . $aantal_kamers . " ");
 }
 
-if (isset($_SESSION['oppervlakte'])){
-    $oppervlakte = $_SESSION['oppervlakte'];
-    array_push($arr, "AND woonoppervlakte = " . $oppervlakte . " ");
+if (isset($_SESSION['oppervlakteVan'])){
+    $oppervlakteVan = $_SESSION['oppervlakteVan'];
+    array_push($arr, "AND woonoppervlakte > " . $oppervlakteVan . " ");
+}
+
+if (isset($_SESSION['oppervlakteTot'])){
+    $oppervlakteTot = $_SESSION['oppervlakteTot'];
+    array_push($arr, "AND woonoppervlakte < " . $oppervlakteTot . " ");
 }
 
 $servername = "localhost";
@@ -92,11 +99,8 @@ $sql = "SELECT
                 wo.PC, 
                 wo.City, 
                 AantalKamers, 
-                WoonOppervlakte,
-                mkantoor.name
-              FROM wo 
-              JOIN mkantoor
-              ON wo.mkid = mkantoor.mkid
+                WoonOppervlakte
+              FROM wo
               WHERE SoortBouw 
               LIKE '%$soort_bouw%' 
               AND wo.Address 

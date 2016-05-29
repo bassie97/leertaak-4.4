@@ -15,12 +15,16 @@ function showValTot() {
     document.getElementById("tot").innerText = "\u20AC" + x;
 }
 
-function showValoppervlakte() {
-    var x = document.getElementById("myRangeOppervlakte").value;
+function showValoppervlakteVan() {
+    var x = document.getElementById("myRangeOppervlakteVan").value;
     console.log(x);
-    var str = "2";
-    var result = str.sub();
-    document.getElementById("oppervlakte").innerHTML = x + "m<sup>2</sup>";
+    document.getElementById("oppervlakteVan").innerHTML = x + "m<sup>2</sup>";
+}
+
+function showValoppervlakteTot() {
+    var x = document.getElementById("myRangeOppervlakteTot").value;
+    console.log(x);
+    document.getElementById("oppervlakteTot").innerHTML = x + "m<sup>2</sup>";
 }
 
 function getResults() {
@@ -112,31 +116,12 @@ function selectAantalKamers(){
     xmlhttp.send();
 }
 
-// function showValoppervlakte(){
-//     var e = document.getElementById("myRangeOppervlakte");
-//     var value = e.options[e.selectedIndex].value;
-//     if (value != null) {
-//         var oppervlakte = value;
-//     }
-//
-//     if (window.XMLHttpRequest) {
-//         // code for IE7+, Firefox, Chrome, Opera, Safari
-//         xmlhttp=new XMLHttpRequest();
-//     } else { // code for IE6, IE5
-//         xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
-//     }
-//     xmlhttp.onreadystatechange=function() {
-//         if (xmlhttp.readyState==4 && xmlhttp.status==200) {
-//             document.getElementById("results").innerHTML=xmlhttp.responseText;
-//         }
-//     }
-//     xmlhttp.open("GET","getResults.php?oppervlakte="+oppervlakte,true);
-//     xmlhttp.send();
-// }
-
 function getOppervlakte() {
-    if (document.getElementById("myRangeOppervlakte").value != null) {
-        var oppervlakte = document.getElementById("myRangeOppervlakte").value;
+    if (document.getElementById("myRangeOppervlakteVan").value != null) {
+        var oppervlakteVan = document.getElementById("myRangeOppervlakteVan").value;
+    }
+    if (document.getElementById("myRangeOppervlakteTot").value != null) {
+        var oppervlakteTot = document.getElementById("myRangeOppervlakteTot").value;
     }
     if (window.XMLHttpRequest) {
         // code for IE7+, Firefox, Chrome, Opera, Safari
@@ -149,6 +134,6 @@ function getOppervlakte() {
             document.getElementById("results").innerHTML=xmlhttp.responseText;
         }
     }
-    xmlhttp.open("GET","getResults.php?oppervlakte=" + oppervlakte ,true);
+    xmlhttp.open("GET","getResults.php?oppervlakteVan=" + oppervlakteVan + "&oppervlakteTot=" + oppervlakteTot ,true);
     xmlhttp.send();
 }

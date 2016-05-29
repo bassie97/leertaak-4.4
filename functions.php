@@ -45,3 +45,16 @@
         $sql = $sql1;
         return $sql;
     }
+
+    function getMakelaar($mkid, $conn){
+        $sql = "SELECT name
+                From mkantoor
+                WHERE mkid='$mkid'";
+        $sql_result = mysqli_query($conn, $sql);
+        if(mysqli_num_rows($sql_result) > 0){
+            while ($row = mysqli_fetch_assoc($sql_result)){
+                echo $row['name'];
+            }
+        }
+
+    }

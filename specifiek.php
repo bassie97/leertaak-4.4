@@ -1,4 +1,5 @@
-<? require_once 'header.php' ?>
+<?php require_once 'header.php' ?>
+<?php require 'functions.php' ?>
 
 <div id="specifiek" style="width: 300px; margin-left: 30px;">
 <form method="post" action="overzicht.php">

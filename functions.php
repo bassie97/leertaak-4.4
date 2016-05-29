@@ -51,7 +51,7 @@ function createQuery($arr1, $sql1)
         foreach ($arr1 as $key => $val) {
             $sql1 .= "AND " . $key . " LIKE " . "'%" . $val . "%' ";
         }
-    } else {
+    } elseif(count($arr1) != 0) {
         $val = end($arr1);
         $key = key($arr1);
         array_pop($arr1);

@@ -163,4 +163,8 @@ table.kenmerken td.kop {
   color: dimgray;
 }
 
+table.kenmerken td.totaal{
+  border: 5px solid black;
+}
+
 sup {font-size:xx-small; vertical-align:super;}

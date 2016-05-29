@@ -12,10 +12,10 @@ $sql_result = getWoning($woid, $conn);
 <div id="main">
     <div id="details">
         <ul>
-            <li><a href="detail.php?woid=<?php echo $woid ?>" class="active">Overzicht</a></li>
-            <li><a href="omschrijving.php?woid=<?php echo $woid ?>" class="licht">Omschrijving</a></li>
+            <li><a href="detail.php?woid=<?php echo $woid ?>" class="licht">Overzicht</a></li>
+            <li><a href="omschrijving.php?woid=<?php echo $woid ?>" class="active">Omschrijving</a></li>
             <li><a href="kenmerken.php?woid=<?php echo $woid ?>" class="licht">Kenmerken</a></li>
-            <li><a href="hypotheek.html" class="licht">Hypotheek</a></li>
+            <li><a href="hypotheek.php?woid=<?php echo $woid ?>" class="licht">Hypotheek</a></li>
             <li><a href="afspraak.html" class="licht">Afspraak makelaar</a></li>
         </ul>
         <div class="content">

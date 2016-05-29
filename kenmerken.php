@@ -18,15 +18,15 @@ $sql_result = getAllFromWoning($woid, $conn);
             <div class="head"><?php echo $row['address'] ?></div>
             <div class="adres"><?php echo $row['pc'] . " " . $row['city'] ?></div>
             <div class="prijs"><?php echo $row['vraagprijs'] ?></div>
-            <div claas="prijs">Geplaatst op: <?php echo $row['plaatsingdatum']?></div>
+            <div class="prijs">Geplaatst op: <?php echo $row['plaatsingdatum']?></div>
         </div>
 
         <div id="details">
             <ul>
-                <li><a href="detail.php?woid=<?php echo $woid ?>" class="active">Overzicht</a></li>
+                <li><a href="detail.php?woid=<?php echo $woid ?>" class="licht">Overzicht</a></li>
                 <li><a href="omschrijving.php?woid=<?php echo $woid ?>" class="licht">Omschrijving</a></li>
-                <li><a href="kenmerken.php?woid=<?php echo $woid ?>" class="licht">Kenmerken</a></li>
-                <li><a href="hypotheek.html" class="licht">Hypotheek</a></li>
+                <li><a href="kenmerken.php?woid=<?php echo $woid ?>" class="active">Kenmerken</a></li>
+                <li><a href="hypotheek.php?woid=<?php echo $woid ?>" class="licht">Hypotheek</a></li>
                 <li><a href="afspraak.html" class="licht">Afspraak makelaar</a></li>
 
             </ul>

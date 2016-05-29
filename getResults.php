@@ -99,7 +99,8 @@ $sql = "SELECT
                 wo.PC, 
                 wo.City, 
                 AantalKamers, 
-                WoonOppervlakte
+                WoonOppervlakte,
+                mkid
               FROM wo
               WHERE SoortBouw 
               LIKE '%$soort_bouw%' 
@@ -116,7 +117,7 @@ if(count($arr) > 0){
         $sql .= $value;
     }
 }
-$sql .= " LIMIT 15";
+$sql .= " LIMIT 15 OFFSET '$offset'";
 
 $sql_result = mysqli_query($conn, $sql);
 print_r($sql);
@@ -131,7 +132,7 @@ if (mysqli_num_rows($sql_result) > 0) {
         <span class="adres"><?php echo $row['PC'] . " " . $row['City'] ?>
             <br/><?php echo $row['WoonOppervlakte'] . "m" ?>
             <sup>2</sup> - <?php echo $row['AantalKamers'] . " kamers" ?></span><br/>
-            <span><a class="makelaar" href="makelaar.html">Hypodomus Groningen</a></span>
+            <span><a class="makelaar" href="makelaar.html"><?php getMakelaar($row['mkid'], $conn)?></a></span>
         </div>
         <?php
     }

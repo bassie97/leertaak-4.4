@@ -49,14 +49,15 @@ if (!empty($huis_nummer)) {
 }
 
 $sql = createQuery($arr1, $sql);
-
+$amount_of_houses = getAmountOfHouses($sql, $conn, false);
+$sql .= " LIMIT 15";
 $sql_result = mysqli_query($conn, $sql);
 
 ?>
 
-<div id="txt">
+<div class="txt">
     <?php
-    getAmountOfHouses($sql_result);
+    echo $amount_of_houses;
     ?>
 </div>
 
@@ -141,7 +142,7 @@ $sql_result = mysqli_query($conn, $sql);
                     </select>
                 </div>
 
-                <div class="head">Aantal kamers</div>s
+                <div class="head">Aantal kamers</div>
                     <select id="mySelectAantalKamers" onchange="selectAantalKamers()">
                         <?php
                         $sql1 = "SELECT MAX(`AantalKamers`) AS AantalKamers FROM wo;";
@@ -174,23 +175,26 @@ $sql_result = mysqli_query($conn, $sql);
             </td>
 
             <td valign="top" id="results">
-                <?php
-                if (mysqli_num_rows($sql_result) > 0) {
-                    while ($row = mysqli_fetch_assoc($sql_result)) {
-                        ?>
-                        <div class="huisdata">
-                            <div class="head"><a class="normal" href="detail.html"><?php echo $row['Address'] ?></a>
+                <div id="pagination">
+                    <button onclick="pagination(0)" >Volgende 15</button>
+                    <?php
+                    if (mysqli_num_rows($sql_result) > 0) {
+                        while ($row = mysqli_fetch_assoc($sql_result)) {
+                            ?>
+                            <div id="huisdata" class="huisdata">
+                                <div class="head"><a class="normal" href="detail.html"><?php echo $row['Address'] ?></a>
+                                </div>
+                                <div class="prijs">€ <?php echo $row['Vraagprijs'] ?> k.k.</div>
+                                <br/>
+                                <span class="adres"><?php echo $row['PC'] . " " . $row['City'] ?>
+                                    <br/><?php echo $row['WoonOppervlakte'] . "m" ?>
+                                    <sup>2</sup> - <?php echo $row['AantalKamers'] . " kamers" ?></span><br/>
+                                <span><a class="makelaar" href="makelaar.html"><?php getMakelaar($row['mkid'], $conn) ?></a></span>
                             </div>
-                            <div class="prijs">€ <?php echo $row['Vraagprijs'] ?> k.k.</div>
-                            <br/>
-                            <span class="adres"><?php echo $row['PC'] . " " . $row['City'] ?>
-                                <br/><?php echo $row['WoonOppervlakte'] . "m" ?>
-                                <sup>2</sup> - <?php echo $row['AantalKamers'] . " kamers" ?></span><br/>
-                            <span><a class="makelaar" href="makelaar.html"><?php getMakelaar($row['mkid'], $conn) ?></a></span>
-</div>
-                        <?php
-                    }
-                } ?>
+                            <?php
+                        }
+                    } ?>
+                </div>
             </td>
         </tr>
     </table>

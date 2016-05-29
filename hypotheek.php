@@ -35,7 +35,7 @@ $sql_result = getAllFromWoning($woid, $conn);
                 <li><a href="omschrijving.php?woid=<?php echo $woid ?>" class="licht">Omschrijving</a></li>
                 <li><a href="kenmerken.php?woid=<?php echo $woid ?>" class="licht">Kenmerken</a></li>
                 <li><a href="hypotheek.php" class="active">Hypotheek</a></li>
-                <li><a href="afspraak.html" class="licht">Afspraak makelaar</a></li>
+                <li><a href="afspraak.php?woid=<?php echo $woid ?>" class="licht">Afspraak makelaar</a></li>
 
             </ul>
 

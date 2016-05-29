@@ -16,7 +16,7 @@ $sql_result = getWoning($woid, $conn);
             <li><a href="omschrijving.php?woid=<?php echo $woid ?>" class="active">Omschrijving</a></li>
             <li><a href="kenmerken.php?woid=<?php echo $woid ?>" class="licht">Kenmerken</a></li>
             <li><a href="hypotheek.php?woid=<?php echo $woid ?>" class="licht">Hypotheek</a></li>
-            <li><a href="afspraak.html" class="licht">Afspraak makelaar</a></li>
+            <li><a href="afspraak.php?woid=<?php echo $woid ?>" class="licht">Afspraak makelaar</a></li>
         </ul>
         <div class="content">
             <table class="kenmerken">

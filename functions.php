@@ -18,13 +18,13 @@ require_once("db_connection.php");
 function getAmountOfHouses($sql, $filtered, $conn)
 {
     $sql_result = mysqli_query($conn, $sql);
-    if (!$filtered){
+    if (!$filtered) {
         if (mysqli_num_rows($sql_result) > 1) {
             $amount = mysqli_num_rows($sql_result) . " koopwoningen gevonden";
         } else {
             $amount = mysqli_num_rows($sql_result) . " koopwoningen gevonden";
         }
-    }else{
+    } else {
         if (mysqli_num_rows($sql_result) > 1) {
             $amount = mysqli_num_rows($sql_result) . " koopwoningen gevonden voor uw filters";
         } else {
@@ -51,7 +51,7 @@ function createQuery($arr1, $sql1)
         foreach ($arr1 as $key => $val) {
             $sql1 .= "AND " . $key . " LIKE " . "'%" . $val . "%' ";
         }
-    } elseif(count($arr1) != 0) {
+    } elseif (count($arr1) != 0) {
         $val = end($arr1);
         $key = key($arr1);
         array_pop($arr1);
@@ -73,10 +73,21 @@ function getMakelaar($mkid, $conn)
             echo $row['name'];
         }
     }
-
 }
 
-function getWoning($woid, $conn){
+function getMakelaarForWoid($woid, $conn)
+{
+    $sql = "SELECT mkantoor.mkid, mkantoor.name, mkantoor.address, mkantoor.pc, mkantoor.city, mkantoor.phone
+                From mkantoor
+                WHERE mkid = (SELECT mkid
+                			 FROM wo
+                             WHERE woid = '$woid')";
+    $sql_result = mysqli_query($conn, $sql);
+    return $sql_result;
+}
+
+function getWoning($woid, $conn)
+{
     $sql = "SELECT 
                 woid,
                 wo.Address, 
@@ -92,7 +103,8 @@ function getWoning($woid, $conn){
     }
 }
 
-function getAllFromWoning($woid, $conn){
+function getAllFromWoning($woid, $conn)
+{
     $sql = "SELECT
               wo.address,
               wo.pc,
@@ -145,6 +157,34 @@ function getAllFromWoning($woid, $conn){
         return $sql_result;
     }
 }
+
+//function createAppointmentList($mkid, $conn)
+//{
+//    $time = 0;
+//    for ($i = 0; $i < 15; $i) {
+//        for ($hour = 9; $hour < 17; $hour++) {
+//            for ($minutes = 00; $minutes <= 30; $minutes += 30) {
+//                if ($minutes == 0) {
+//                    $time = $hour . ":" . $minutes . "0<br/>";
+//                } else {
+//                    $time = $hour . ":" . $minutes, "<br/>";
+//                }
+//                $sql = "SELECT COUNT(mkid)
+//                        FROM afspraak
+//                        WHERE mkid = '$mkid'
+//                        AND van = '$time' ";
+//                $sql_result = mysqli_query($conn, $sql);
+//                if (mysqli_num_rows($sql_result) == 0){
+//                    ?>
+<!--                    <tr>-->
+<!--                        -->
+<!--                    </tr>-->
+<!--                    --><?php
+//                }
+//            }
+//        }
+//    }
+//}
 
 
 

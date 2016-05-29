@@ -6,11 +6,16 @@
  * Time: 17:24
  */
 
+require_once("db_connection.php");
+
 /**
  * @param $sql
+ * @param $filtered
  * @param $conn
+ * @return string
+ * @internal param $conn
  */
-function getAmountOfHouses($sql, $conn, $filtered)
+function getAmountOfHouses($sql, $filtered, $conn)
 {
     $sql_result = mysqli_query($conn, $sql);
     if (!$filtered){
@@ -69,4 +74,20 @@ function getMakelaar($mkid, $conn)
         }
     }
 
+}
+
+function getWoning($woid, $conn){
+    $sql = "SELECT 
+                woid,
+                wo.Address, 
+                Vraagprijs,
+                wo.PC, 
+                wo.City,
+                wo.omschrijving
+              FROM wo
+              WHERE woid = '$woid'";
+    $sql_result = mysqli_query($conn, $sql);
+    if (mysqli_num_rows($sql_result) > 0) {
+        return $sql_result;
+    }
 }

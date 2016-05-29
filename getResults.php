@@ -19,7 +19,7 @@ if (isset($_GET['page'])) {
 
     $_SESSION['page'] = $page;
     $_SESSION['offset'] = $offset;
-}else{
+} else {
     $page = 0;
     $offset = 0;
     $_SESSION['page'] = $page;
@@ -115,6 +115,7 @@ if ($conn->connect_error) {
 }
 
 $sql = "SELECT 
+                woid,
                 wo.Address, 
                 Vraagprijs,
                 wo.PC, 
@@ -139,7 +140,7 @@ if (count($arr) > 0) {
     }
 }
 
-$amount = getAmountOfHouses($sql, $conn, true);
+$amount = getAmountOfHouses($sql, true, $conn);
 
 $sql .= " LIMIT " . $limit . " OFFSET " . $offset;
 print_r($sql);
@@ -167,7 +168,7 @@ if ($rec_count > 0) {
     while ($row = mysqli_fetch_assoc($sql_result)) {
         ?>
         <div class="huisdata">
-            <div class="head"><a class="normal" href="detail.html"><?php echo $row['Address'] ?></a>
+            <div class="head"><a class="normal" href="detail.php?woid=<?php echo $row['woid'] ?>"><?php echo $row['Address'] ?></a>
             </div>
             <div class="prijs">€ <?php echo $row['Vraagprijs'] ?> k.k.</div>
             <br/>

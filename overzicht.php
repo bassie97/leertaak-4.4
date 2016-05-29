@@ -23,6 +23,7 @@ if (isset($_POST['submit'])) {
 }
 
 $sql = "SELECT 
+                woid,
                 wo.Address, 
                 Vraagprijs,
                 wo.PC, 
@@ -49,7 +50,7 @@ if (!empty($huis_nummer)) {
 }
 
 $sql = createQuery($arr1, $sql);
-$amount_of_houses = getAmountOfHouses($sql, $conn, false);
+$amount_of_houses = getAmountOfHouses($sql, false, $conn);
 $sql .= " LIMIT 15";
 $sql_result = mysqli_query($conn, $sql);
 
@@ -182,7 +183,7 @@ $sql_result = mysqli_query($conn, $sql);
                         while ($row = mysqli_fetch_assoc($sql_result)) {
                             ?>
                             <div id="huisdata" class="huisdata">
-                                <div class="head"><a class="normal" href="detail.html"><?php echo $row['Address'] ?></a>
+                                <div class="head"><a class="normal" href="detail.php?woid=<?php echo $row['woid']?>"><?php echo $row['Address'] ?></a>
                                 </div>
                                 <div class="prijs">€ <?php echo $row['Vraagprijs'] ?> k.k.</div>
                                 <br/>

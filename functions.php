@@ -91,3 +91,62 @@ function getWoning($woid, $conn){
         return $sql_result;
     }
 }
+
+function getAllFromWoning($woid, $conn){
+    $sql = "SELECT
+              wo.address,
+              wo.pc,
+              wo.city,
+              vraagprijs,
+              bouwjaar,
+              tuinaanwezig,
+              tuinoppervlakte,
+              woonoppervlakte,
+              inhoud,
+              aantalkamers,
+              aantalbadkamers,
+              aantalwoonlagen,
+              perceeloppervlakte,
+              plaatsingdatum,
+              ligging.name as ligging1,
+              a.name as ligging2,
+              b.name as ligging3,
+              c.name as ligging4,
+              d.name as ligging5,
+              e.name as ligging6,
+              f.name as ligging7,
+              g.name as ligging8,
+              mkantoor.name as mkantoor,
+              status.name as status,
+              soortvraagprijs.name as soortvraagprijs,
+              soortobject.name as soortobject,
+              soortwoning.name as soortwoning,
+              typewoning.name as typewoning,
+              soortbouw.name as soortbouw
+              FROM wo
+              LEFT JOIN mkantoor ON wo.mkid = mkantoor.mkid
+              LEFT JOIN status ON wo.status = status.id
+              LEFT JOIN soortvraagprijs ON wo.vraagprijssoort = soortvraagprijs.id
+              LEFT JOIN soortobject ON wo.soortobject = soortobject.id
+              LEFT JOIN soortwoning ON wo.soortwoning = soortwoning.id
+              LEFT JOIN typewoning ON wo.typewoning = typewoning.id
+              LEFT JOIN soortbouw ON wo.soortbouw = soortbouw.id
+              LEFT JOIN ligging ON wo.Ligging1 = ligging.id
+              LEFT JOIN ligging a ON wo.Ligging2 = a.id
+              LEFT JOIN ligging b ON wo.Ligging3 = b.id
+              LEFT JOIN ligging c ON wo.Ligging4 = c.id
+              LEFT JOIN ligging d ON wo.Ligging5 = d.id
+              LEFT JOIN ligging e ON wo.Ligging6 = e.id
+              LEFT JOIN ligging f ON wo.Ligging7 = f.id
+              LEFT JOIN ligging g ON wo.Ligging8 = g.id
+              WHERE woid = '$woid'";
+    $sql_result = mysqli_query($conn, $sql);
+    if (mysqli_num_rows($sql_result) > 0) {
+        return $sql_result;
+    }
+}
+
+
+
+
+

@@ -143,7 +143,6 @@ if (count($arr) > 0) {
 $amount = getAmountOfHouses($sql, true, $conn);
 
 $sql .= " LIMIT " . $limit . " OFFSET " . $offset;
-print_r($sql);
 $sql_result = mysqli_query($conn, $sql);
 $rec_count = mysqli_num_rows($sql_result);
 

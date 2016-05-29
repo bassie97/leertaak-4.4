@@ -30,7 +30,7 @@ $sql_result = getWoning($woid, $conn);
 
             </ul>
 
-            <div id="content">
+            <div class="content">
                 <?php
                 $str_to_display = $row['omschrijving'];
                 $str_to_display = implode(' ', array_slice(explode(' ', $str_to_display), 0, 30));
@@ -38,7 +38,7 @@ $sql_result = getWoning($woid, $conn);
                 echo $str_to_display;
 
                 ?>
-                <table id="kenmerken">
+                <table class="kenmerken">
                     <tr>
                         <th colspan="2">Kenmerken</th>
                     </tr>

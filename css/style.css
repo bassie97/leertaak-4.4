@@ -115,7 +115,7 @@ a.makelaar:hover {
   background-color: #e0f3ff;
 }
 
-#content { 
+.content {
   border: solid #e0f3ff 5px;
   padding: 20px;
 }
@@ -139,27 +139,27 @@ a.makelaar:hover {
   font-weight: bold;
 }
 
-table#kenmerken {
+table.kenmerken {
   margin-top: 10px;
   width: 100%;
   border-collapse: collapse;
 }
 
-table#kenmerken th {
+table.kenmerken th {
   background-color: #eeeeee;
   font-size: 14px;
   color: dimgray;
   text-align: left;
 }
 
-table#kenmerken td {
+table.kenmerken td {
   width: 50%;
   padding-top: 4px;
   padding-bottom: 4px;
   border-bottom: solid gray 1px;
 }
 
-table#kenmerken td.kop {
+table.kenmerken td.kop {
   color: dimgray;
 }
 

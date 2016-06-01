@@ -2,6 +2,8 @@
 <?php require 'functions.php' ?>
 
 <?php
+session_start();
+
 if (isset($_GET['woid'])) {
     $woid = $_GET['woid'];
 }

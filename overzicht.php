@@ -20,6 +20,12 @@ if (isset($_POST['submit'])) {
     $_SESSION['huis_nummer'] = $huis_nummer;
     $_SESSION['post_code'] = $post_code;
     $_SESSION['plaats_naam'] = $plaats_naam;
+}else{
+    $_SESSION['soort_bouw'] = "";
+    $_SESSION['straat_naam'] = "";
+    $_SESSION['huis_nummer'] = "";
+    $_SESSION['post_code'] = "";
+    $_SESSION['plaats_naam'] = "";
 }
 
 $sql = "SELECT 

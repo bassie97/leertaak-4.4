@@ -20,7 +20,7 @@ $sql_result = getAllFromWoning($woid, $conn);
     <?php
     while ($row = mysqli_fetch_assoc($sql_result)) {
         $koopsom = $row['vraagprijs'];
-        $kosten_koper = $koopsom * 0.2;
+        $kosten_koper = $koopsom * 0.02;
         ?>
         <div id="adresgegevens">
             <div class="head"><?php echo $row['address'] ?></div>

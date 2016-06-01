@@ -34,7 +34,7 @@ $sql_result = getWoning($woid, $conn);
                 <?php
                 $str_to_display = $row['omschrijving'];
                 $str_to_display = implode(' ', array_slice(explode(' ', $str_to_display), 0, 30));
-                $str_to_display .= "...<a href=omschrijving.php=" . $woid . ">Volledige omschrijving</a>";
+                $str_to_display .= "...<a href=omschrijving.php?woid=" . $woid . ">Volledige omschrijving</a>";
                 echo $str_to_display;
 
                 ?>

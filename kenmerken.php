@@ -18,7 +18,7 @@ $sql_result = getAllFromWoning($woid, $conn);
             <div class="head"><?php echo $row['address'] ?></div>
             <div class="adres"><?php echo $row['pc'] . " " . $row['city'] ?></div>
             <div class="prijs"><?php echo $row['vraagprijs'] ?></div>
-            <div class="prijs">Geplaatst op: <?php echo $row['plaatsingdatum']?></div>
+            <div class="prijs">Geplaatst op: <?php echo $row['plaatsingdatum'] ?></div>
         </div>
 
         <div id="details">
@@ -32,8 +32,7 @@ $sql_result = getAllFromWoning($woid, $conn);
             </ul>
             <div class="content">
                 <table class="kenmerken">
-                    <tr>
-                        <th colspan="2">Kenmerken</th>
+                    <th colspan="2">Kenmerken</th>
                     </tr>
                     <tr>
                         <td class="kop">Addres</td>
@@ -62,42 +61,25 @@ $sql_result = getAllFromWoning($woid, $conn);
                     <tr>
                         <td class="kop">Type woning</td>
                         <td><?php echo $row['typewoning'] ?></td>
-                    </tr><tr>
+                    </tr>
+                    <tr>
                         <td class="kop">Soortbouw</td>
                         <td><?php echo $row['soortbouw'] ?></td>
                     </tr>
-                    <tr>
-                        <td class="kop">Ligging1</td>
-                        <td><?php echo $row['ligging1'] ?></td>
-                    </tr>
-                    <tr>
-                        <td class="kop">Ligging2</td>
-                        <td><?php echo $row['ligging2'] ?></td>
-                    </tr>
-                    <tr>
-                        <td class="kop">Ligging3</td>
-                        <td><?php echo $row['ligging3'] ?></td>
-                    </tr>
-                    <tr>
-                        <td class="kop">Ligging4</td>
-                        <td><?php echo $row['ligging4'] ?></td>
-                    </tr>
-                    <tr>
-                        <td class="kop">Ligging5</td>
-                        <td><?php echo $row['ligging5'] ?></td>
-                    </tr>
-                    <tr>
-                        <td class="kop">Ligging6</td>
-                        <td><?php echo $row['ligging6'] ?></td>
-                    </tr>
-                    <tr>
-                        <td class="kop">Ligging7</td>
-                        <td><?php echo $row['ligging7'] ?></td>
-                    </tr>
-                    <tr>
-                        <td class="kop">Ligging8</td>
-                        <td><?php echo $row['ligging8'] ?></td>
-                    </tr>
+                    <?php
+                    $id = 0;
+                    $result = getLiggingForWoid($woid, $conn);
+
+                    while($ligging = mysqli_fetch_assoc($result)){
+                        $id++;
+                    ?>
+                        <tr>
+                            <td class="kop">Ligging <?php echo $id; ?></td>
+                            <td><?php echo $ligging['Name']; ?></td>
+                        </tr>
+                    <?php
+                    }
+                    ?>
                     <tr>
                         <td class="kop">Bouwjaar</td>
                         <td><?php echo $row['bouwjaar'] ?></td>
@@ -105,12 +87,13 @@ $sql_result = getAllFromWoning($woid, $conn);
                     <tr>
                         <td class="kop">Tuinaanwezig</td>
                         <td><?php
-                            if ($row['tuinaanwezig'] == 1){
+                            if ($row['tuinaanwezig'] == 1) {
                                 echo "Ja";
-                            }else{
+                            } else {
                                 echo "Nee";
-                            }?>
-                        a</td>
+                            } ?>
+                            a
+                        </td>
                     </tr>
                     <tr>
                         <td class="kop">Tuinoppervlakte</td>

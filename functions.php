@@ -120,14 +120,6 @@ function getAllFromWoning($woid, $conn)
               aantalwoonlagen,
               perceeloppervlakte,
               plaatsingdatum,
-              ligging.name as ligging1,
-              a.name as ligging2,
-              b.name as ligging3,
-              c.name as ligging4,
-              d.name as ligging5,
-              e.name as ligging6,
-              f.name as ligging7,
-              g.name as ligging8,
               mkantoor.name as mkantoor,
               status.name as status,
               soortvraagprijs.name as soortvraagprijs,
@@ -143,15 +135,16 @@ function getAllFromWoning($woid, $conn)
               LEFT JOIN soortwoning ON wo.soortwoning = soortwoning.id
               LEFT JOIN typewoning ON wo.typewoning = typewoning.id
               LEFT JOIN soortbouw ON wo.soortbouw = soortbouw.id
-              LEFT JOIN ligging ON wo.Ligging1 = ligging.id
-              LEFT JOIN ligging a ON wo.Ligging2 = a.id
-              LEFT JOIN ligging b ON wo.Ligging3 = b.id
-              LEFT JOIN ligging c ON wo.Ligging4 = c.id
-              LEFT JOIN ligging d ON wo.Ligging5 = d.id
-              LEFT JOIN ligging e ON wo.Ligging6 = e.id
-              LEFT JOIN ligging f ON wo.Ligging7 = f.id
-              LEFT JOIN ligging g ON wo.Ligging8 = g.id
               WHERE woid = '$woid'";
+    $sql_result = mysqli_query($conn, $sql);
+    if (mysqli_num_rows($sql_result) > 0) {
+        return $sql_result;
+    }
+}
+
+function getLiggingForWoid($woid, $conn) {
+    $sql = "SELECT ligging.Name FROM ligging JOIN wo_ligging ON ligging.ID = wo_ligging.liggingid JOIN wo ON wo_ligging.woid = wo.WOID WHERE wo.WOID = $woid ";
+
     $sql_result = mysqli_query($conn, $sql);
     if (mysqli_num_rows($sql_result) > 0) {
         return $sql_result;
